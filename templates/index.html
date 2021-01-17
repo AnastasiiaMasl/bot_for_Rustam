@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style>
+body {
+    font-family: Atma;
+    Font style: Regular;
+    Font size: 64px;
+    Line height: 104px;
+    Line height: 100%;
+    Align: Center;
+}
+h1 {
+    color: black;
+    background-color: #ECB8B8;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: left;
+    font-size: 40px;
+    border: black
+}
+#chatbox {
+    margin-left: right;
+    margin-right: left;
+    width: 40%;
+    margin-top: 60px;
+    text-align: center;
+}
+
+#userInput {
+    margin-left: right;
+    margin-right: left;
+    width: 40%;
+    margin-top: 60px;
+}
+
+#textInput {
+    width: 87%;
+    border: none;
+    border-bottom: 3px solid grey;
+    font-family: monospace;
+    font-size: 17px;
+}
+
+#buttonInput {
+    padding: 3px;
+    font-family: monospace;
+    font-size: 17px;
+}
+
+.userText {
+    color: black;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: right;
+    line-height: 30px;
+}
+
+.userText span {
+    background-color:grey;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+.botText {
+    color: black;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: left;
+    line-height: 30px;
+}
+
+.botText span {
+    background-color:#EFE8F4;
+    padding: 10px;
+    border-radius: 2px;
+}
+
+</style>
+<body>
+<h1>Hey! I'm here to chat:)</h1>
+<div>
+<div id = "chatbox">
+<p class = "botText"><span>Dear Rustam, happy birthday!</span></p>
+</div>
+<div id = "userInput">
+<input id ="textInput" type ="text" name="msg" placeholder="Message">
+<input id = "buttonInput" type = "submit" value="Send">
+</div>
+<script>
+function getBotResponse(){
+var rawText = $("#textInput").val();
+var userHtml = '<p class = "userText"><span>' + rawText + '</span></p>';
+$("#textInput").val("");
+$("#chatbox").append(userHtml);
+document.getElementById('userInput').scrollIntoView({block:'start',behaviour:'smooth'});
+$.get("/get", {msg:rawText }).done(function(data) {
+var botHtml = '<p class ="botText"><span>' + data + '</span></p>';
+$("#chatbox").append(botHtml);
+document.getElementById('userInput').scrollIntoView({block : 'start',behaviour:'smooth'});
+});
+}
+$("#textInput").keypress(function(e) {
+if(e.which == 13) {
+getBotResponse();
+}
+});
+$("#buttonInput").click(function() {
+getBotResponse();
+})
+</script>
+</div>
+</body>
+</html>
